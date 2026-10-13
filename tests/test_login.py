@@ -1,8 +1,9 @@
 import pytest
 from playwright.sync_api import Page, expect
 from faker import Faker
+import time
 
-from page_objects.main_page import *
+#from page_objects.main_page import *
 from page_objects.login_page import *
 
 

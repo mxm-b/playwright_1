@@ -18,7 +18,9 @@ class LoginPage(MainPage):
         self.page.get_by_test_id('login-password').fill(password)
 
     def click_confirm(self):
-        self.page.get_by_role('button', name='Confirm').click()
+        button = self.page.get_by_role('button', name='Confirm')
+        button.click()
+        expect(self.page.get_by_test_id('login-submit-spinner')).to_be_visible()
 
     def check_error(self):
         expect(
