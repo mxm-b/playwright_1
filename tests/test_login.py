@@ -21,5 +21,5 @@ def test_login_auth(page: Page):
     login_page.insert_email(email1)
     login_page.insert_password(password1)
     login_page.click_confirm()
-    expect(page.get_by_test_id('login-submit-spinner')).to_be_visible()
-    expect(page.get_by_test_id('login-error-inline')).to_have_text(error_text)
+    expect(login_page.check_loading_status()).to_be_visible()
+    expect(login_page.receive_error_text()).to_have_text(error_text)
