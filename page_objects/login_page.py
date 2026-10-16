@@ -25,9 +25,6 @@ class LoginPage(MainPage):
     def click_confirm(self):
         self.submit_button.click()
 
-    def check_loading_status(self):
-        return self.loading_spinner.is_visible()
-
     def wait_for_loading_finished(self):
         self.loading_spinner.wait_for(state='hidden')
 

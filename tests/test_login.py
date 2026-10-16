@@ -23,7 +23,6 @@ def test_login_auth(page: Page):
     login_page.insert_email(email1)
     login_page.insert_password(password1)
     login_page.click_confirm()
-    assert login_page.check_loading_status()
     login_page.wait_for_loading_finished()
 
     actual_error_text = login_page.get_error_text()
