@@ -7,4 +7,4 @@ class MainPage:
         self.page = page
 
     def click_login(self):
-        self.page.get_by_text('Login').click()
+        self.page.get_by_test_id('nav-login').click()

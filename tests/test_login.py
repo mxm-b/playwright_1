@@ -25,4 +25,8 @@ def test_login_auth(page: Page):
     login_page.click_confirm()
     assert login_page.check_loading_status()
     login_page.wait_for_loading_finished()
-    assert login_page.receive_error_text() == error_text
+
+    actual_error_text = login_page.get_error_text()
+    assert actual_error_text == error_text, (
+        f'Actual: {actual_error_text}, Expected: {error_text}'
+    )
