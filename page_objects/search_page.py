@@ -1,5 +1,17 @@
 from page_objects.starter_page import StarterPage
 
+from enum import StrEnum
+
+
+class Filters(StrEnum):
+    BY_RELEVANCE = 'Relevance'
+    BY_PRICE_ASC = 'Price: low to high'
+    BY_PRICE_DESC = 'Price: high to low'
+    BY_READ_SHORT = 'Read time: shortest first'
+    BY_READ_LONG = 'Read time: longest first'
+    BY_TITLE = 'Title (A-Z)'
+
+
 class SearchPage(StarterPage):
 
     def __init__(self, page):
@@ -14,8 +26,17 @@ class SearchPage(StarterPage):
         self.apply_button.click()
 
     def search_price_for_articles(self, n):
-        return self.find_price_class.all_inner_texts()[:n]
+        price_list = []
+        a = 0
+        for i in self.find_price_class.all():
+            if a < n:
+                price_list.append(int(i.get_attribute('data-price')))
+                a += 1
+            else:
+                break
+        return price_list
 
     def wait_for_loading_finished(self):
+        self.spinner.wait_for(state='visible')
         self.spinner.wait_for(state='hidden')
 
