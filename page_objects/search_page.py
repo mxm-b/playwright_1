@@ -27,13 +27,9 @@ class SearchPage(StarterPage):
 
     def search_price_for_articles(self, n):
         price_list = []
-        a = 0
-        for i in self.find_price_class.all():
-            if a < n:
-                price_list.append(int(i.get_attribute('data-price')))
-                a += 1
-            else:
-                break
+        prices = self.find_price_class.all()[:n]
+        for price in prices:
+            price_list.append(int(price.get_attribute('data-price')))
         return price_list
 
     def wait_for_loading_finished(self):

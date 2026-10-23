@@ -8,46 +8,32 @@ from config_reader import ConfigReader
 
 config_reader = ConfigReader('config.json')
 
-@pytest.mark.parametrize('test_data',
-    [{
-      "name": "city",
-      "n": 10,
-      "filter_type": "Price: low to high"
-    },
-    {
-      "name": "city",
-      "n": 15,
-      "filter_type": "Price: high to low"
-    },
-    {
-      "name": "habits",
-      "n": 10,
-      "filter_type": "Price: low to high"
-    },
-    {
-      "name": "habits",
-      "n": 15,
-      "filter_type": "Price: high to low"
-    }]
-  )
-def test_receive_prices(page:Page, test_data):
+@pytest.mark.parametrize('name', ['city', 'habits'])
+@pytest.mark.parametrize(
+    'n, filter_type', [
+        (10, Filters.BY_PRICE_ASC),
+        (15, Filters.BY_PRICE_DESC)
+    ]
+)
+
+def test_receive_prices(page:Page, name, n, filter_type):
 
     page.goto(config_reader.get_url())
     starter_page = StarterPage(page)
-    starter_page.enter_text_to_search(test_data['name'])
+    starter_page.enter_text_to_search(name)
 
 
     search_page = SearchPage(page)
-    search_page.set_filter(test_data['filter_type'])
+    search_page.set_filter(filter_type)
     search_page.wait_for_loading_finished()
-    prices = search_page.search_price_for_articles(test_data['n'])
+    prices = search_page.search_price_for_articles(n)
 
 
-    if test_data['filter_type'] == Filters.BY_PRICE_ASC:
+    if filter_type == Filters.BY_PRICE_ASC:
         assert prices == sorted(prices), (
             f'Actual: {prices}, Expected: {sorted(prices)}'
         )
-    elif test_data['filter_type'] == Filters.BY_PRICE_DESC:
+    elif filter_type == Filters.BY_PRICE_DESC:
         assert prices == sorted(prices, reverse=True), (
             f'Actual: {prices}, Expected: {sorted(prices, reverse=True)}'
         )
