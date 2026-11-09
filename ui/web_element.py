@@ -8,7 +8,11 @@ logger = logging.getLogger(LOGGER_NAME)
 
 
 class WebElement:
-    def __init__(self, locator: Locator, description: str, page: Page):
+    def __init__(
+            self,
+            locator: Locator,
+            description: str,
+            page: Page | None = None,):
         self.page = page
         self.locator = locator
         self.description = description
@@ -39,17 +43,9 @@ class WebElement:
         logger.info(f'{self}- hover coursor')
         self.locator.hover()
 
-    def count_elements(self):
-        logger.info(f'{self}- count elements')
-        return self.locator.count()
-
     def get_attribute(self, name):
         logger.info(f'{self}- get attribute')
         return self.locator.get_attribute(name)
-
-    def scroll_element_into_view(self,index):
-        logger.info(f'{self}- scroll down to element with index {index}')
-        self.locator.nth(index).scroll_into_view_if_needed()
 
     def set_input_files(self, file_path: Path):
         logger.info(f'{self}- set input file "{file_path}"')

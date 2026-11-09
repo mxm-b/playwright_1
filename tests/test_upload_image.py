@@ -1,20 +1,21 @@
-from playwright.sync_api import Page
 from logger import setup_logger
 from page_objects.upload_image_page import UploadImagePage
+from ui.page_actions import PageActions
+from tests.conftest import upload_file
 
 
 logger = setup_logger()
 
 
-def test_upload_image(page):
+def test_upload_image(page, upload_file):
     upload_image_page = UploadImagePage(page)
+    page_actions = PageActions(page)
     url = 'https://the-internet.herokuapp.com/upload'
-    file_name = '25_ru.jpg'
-    path = f'/Users/max.bokarev/Downloads/{file_name}'
     success_message = 'File Uploaded!'
+    expected_file_name = upload_file.name
 
-    upload_image_page.open_page(url)
-    upload_image_page.select_file_from_path(path)
+    page_actions.open_page(url)
+    upload_image_page.select_file_from_path(upload_file)
     upload_image_page.click_upload_button()
 
     received_success_message = upload_image_page.get_success_message()
@@ -24,8 +25,8 @@ def test_upload_image(page):
             f'Actual success message: {received_success_message}\n'
             f'Expected success message: {success_message}'
         )
-    assert received_file_name == file_name, \
+    assert received_file_name == expected_file_name, \
         (
             f'Actual file name: {received_file_name}\n'
-            f'Received file name: {file_name}'
+            f'Expected file name: {expected_file_name}'
         )

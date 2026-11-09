@@ -1,27 +1,15 @@
 from playwright.sync_api import Page
-from ui.web_element import WebElement
-from ui.page_actions import PageActions
+from ui.multiweb_element import MultiWebElement
 
 
 class DynamicContentPage:
     def __init__(self, page):
         self.page = page
-        self.actions = PageActions(page)
-
-        self.photo_locator = self.page.locator('#content img')
-
-
-    def open_page(self, url):
-        self.actions.open_page(url)
-
-    def reload_page(self):
-        self.actions.reload_page()
+        self.photos = MultiWebElement(
+            self.page,
+            self.page.locator('#content img'),
+            'all photo elements',
+        )
 
     def get_attribute_of_photo(self, index):
-        numbered_photo = self.photo_locator.nth(index)
-        photo_element = WebElement(
-            numbered_photo,
-            'photo element',
-            self.page
-        )
-        return photo_element.get_attribute('src')
+        return self.photos.nth(index).get_attribute('src')

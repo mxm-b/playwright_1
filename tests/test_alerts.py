@@ -1,6 +1,8 @@
 from logger import setup_logger
 from faker import Faker
 from page_objects.alert_page import AlertPage
+from ui.page_actions import PageActions
+
 
 logger = setup_logger()
 faker = Faker()
@@ -8,7 +10,8 @@ faker = Faker()
 
 def test_alert(page):
 
-    URL = 'https://the-internet.herokuapp.com/javascript_alerts'
+    url = 'https://the-internet.herokuapp.com/javascript_alerts'
+    page_actions = PageActions(page)
     alert_page = AlertPage(page)
     dialog_messages = []
     random_text = faker.sentence()
@@ -19,7 +22,6 @@ def test_alert(page):
     confirm_expected_alert_text = "I am a JS Confirm"
     prompt_expected_alert_text = "I am a JS prompt"
 
-
     def handle_dialog(dialog):
         dialog_messages.append(dialog.message)
         if dialog.type == 'prompt':
@@ -29,8 +31,7 @@ def test_alert(page):
 
     page.on("dialog", handle_dialog)
 
-
-    alert_page.open_page(URL)
+    page_actions.open_page(url)
     alert_page.click_alert()
     received_text = alert_page.get_result_text()
     assert dialog_messages[0] == alert_expected_alert_text, \
@@ -44,12 +45,11 @@ def test_alert(page):
             f'Expected: {alert_expected_message}'
         )
 
-
     alert_page.click_confirm()
     received_text = alert_page.get_result_text()
     assert dialog_messages[1] == confirm_expected_alert_text, \
         (
-            f'Actual: {dialog_messages[0]}\n'
+            f'Actual: {dialog_messages[1]}\n'
             f'Expected: {confirm_expected_alert_text}'
         )
     assert received_text == confirm_expected_message, \
@@ -62,7 +62,7 @@ def test_alert(page):
     received_text = alert_page.get_result_text()
     assert dialog_messages[2] == prompt_expected_alert_text, \
         (
-            f'Actual: {dialog_messages[0]}\n'
+            f'Actual: {dialog_messages[2]}\n'
             f'Expected: {prompt_expected_alert_text}'
         )
     assert received_text == prompt_expected_message, \

@@ -1,10 +1,9 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 import pytest
-from logger import setup_logger
 
 from page_objects.basic_auth_page import BasicAuthPage
+from ui.page_actions import PageActions
 
-logger = setup_logger()
 
 @pytest.mark.parametrize(
     'context',
@@ -22,8 +21,9 @@ logger = setup_logger()
 )
 def test_basic_auth(page: Page, URL, expect_message):
     basic_page = BasicAuthPage(page)
+    page_actions = PageActions(page)
 
-    basic_page.open_page(URL)
+    page_actions.open_page(URL)
     received_message = basic_page.get_success_message()
     assert received_message == expect_message, \
         (

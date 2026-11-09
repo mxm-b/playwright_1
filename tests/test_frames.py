@@ -1,5 +1,6 @@
 from playwright.sync_api import Page
 from page_objects.frames_page import FramesPage
+from ui.page_actions import PageActions
 from logger import setup_logger
 
 
@@ -8,13 +9,14 @@ logger = setup_logger()
 
 def test_frames_page(page):
     frames_page = FramesPage(page)
+    page_actions = PageActions(page)
     url = 'https://the-internet.herokuapp.com/nested_frames'
     left_frame_text = 'LEFT'
     right_frame_text = 'RIGHT'
     bottom_frame_text = 'BOTTOM'
     middle_frame_text = 'MIDDLE'
 
-    frames_page.open_page(url)
+    page_actions.open_page(url)
     actual_text_left_frame = frames_page.get_text_left_frame()
     assert actual_text_left_frame == left_frame_text, \
         (

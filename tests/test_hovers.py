@@ -1,6 +1,6 @@
-from playwright.sync_api import Page, expect
 from logger import setup_logger
 from page_objects.hovers_page import HoversPage
+from ui.page_actions import PageActions
 
 
 logger = setup_logger()
@@ -8,9 +8,10 @@ logger = setup_logger()
 
 def test_hovers(page):
     hovers_page = HoversPage(page)
+    page_actions = PageActions(page)
     url = 'https://the-internet.herokuapp.com/hovers'
 
-    hovers_page.open_page(url)
+    page_actions.open_page(url)
     number_of_users = hovers_page.count_users()
     for user_index in range(number_of_users):
         expected_user_text = f'name: user{user_index + 1}'
@@ -21,4 +22,3 @@ def test_hovers(page):
                 f'Actual: {actual_user_text}\n'
                 f'Expected: {expected_user_text}'
             )
-
