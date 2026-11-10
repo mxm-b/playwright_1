@@ -1,10 +1,5 @@
-from playwright.sync_api import Page
 from page_objects.scroll_page import ScrollPage
 from ui.page_actions import PageActions
-from logger import setup_logger
-
-
-logger = setup_logger()
 
 
 def test_scroll_page(page):

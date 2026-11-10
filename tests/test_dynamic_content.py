@@ -1,9 +1,5 @@
 from page_objects.dynamic_content_page import DynamicContentPage
 from ui.page_actions import PageActions
-from logger import setup_logger
-
-
-logger = setup_logger()
 
 
 def test_dynamic_content(page):

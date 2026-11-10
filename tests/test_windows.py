@@ -1,10 +1,5 @@
-from playwright.sync_api import Page, expect
 from page_objects.windows_page import WindowsPage
 from ui.page_actions import PageActions
-from logger import setup_logger
-
-
-logger = setup_logger()
 
 
 def test_windows(page):

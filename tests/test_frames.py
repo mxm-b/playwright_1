@@ -1,10 +1,5 @@
-from playwright.sync_api import Page
 from page_objects.frames_page import FramesPage
 from ui.page_actions import PageActions
-from logger import setup_logger
-
-
-logger = setup_logger()
 
 
 def test_frames_page(page):

@@ -1,9 +1,5 @@
-from logger import setup_logger
 from page_objects.hovers_page import HoversPage
 from ui.page_actions import PageActions
-
-
-logger = setup_logger()
 
 
 def test_hovers(page):

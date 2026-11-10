@@ -1,10 +1,5 @@
-from playwright.sync_api import Page
-from logger import setup_logger
 from page_objects.download_page import DownloadPage
 from ui.page_actions import PageActions
-
-
-logger = setup_logger()
 
 
 def test_download_page(page):

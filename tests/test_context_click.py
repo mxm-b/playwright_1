@@ -1,10 +1,5 @@
-from playwright.sync_api import Page, expect
-from logger import setup_logger
 from page_objects.context_click_page import ContextClickPage
 from ui.page_actions import PageActions
-
-
-logger = setup_logger()
 
 
 def test_context_click(page):

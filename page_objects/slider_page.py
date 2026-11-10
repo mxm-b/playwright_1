@@ -17,8 +17,17 @@ class SliderPage:
             page
         )
 
-    def move_slider_with_value(self, number_of_clicks, key):
-        for slider_mover in range(number_of_clicks):
+    def move_slider_with_value(self, target_value):
+        current_slider_value = self.receive_slider_value()
+        step_value = self.get_step_value()
+        number_of_clicks = abs(target_value - current_slider_value) / step_value
+        if current_slider_value < target_value:
+            key = 'ArrowRight'
+        elif current_slider_value > target_value:
+            key = 'ArrowLeft'
+        else:
+            key = None
+        for slider_mover in range(round(number_of_clicks)):
             self.slider.press_key(key)
 
     def receive_slider_value(self):

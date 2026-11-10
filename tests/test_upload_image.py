@@ -1,10 +1,6 @@
-from logger import setup_logger
 from page_objects.upload_image_page import UploadImagePage
 from ui.page_actions import PageActions
 from tests.conftest import upload_file
-
-
-logger = setup_logger()
 
 
 def test_upload_image(page, upload_file):

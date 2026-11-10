@@ -1,10 +1,8 @@
-from logger import setup_logger
 from faker import Faker
 from page_objects.alert_page import AlertPage
 from ui.page_actions import PageActions
 
 
-logger = setup_logger()
 faker = Faker()
 
 
